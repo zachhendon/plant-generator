@@ -1,26 +1,51 @@
 import './App.css'
+import {useState, ChangeEvent} from "react";
 import {Canvas} from '@react-three/fiber'
 import {Line, PivotControls} from "@react-three/drei"
 import {Vector3} from "three"
-import {initializePoints, right, up, forward} from "./draw.ts";
+import {initializePoints, drawPoints} from "./draw.ts";
 
 function App() {
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    setN(Math.max(0, e.target.valueAsNumber));
+  }
+
+  const [n, setN] = useState(0);
+
+  let struct: string = "F-F-F-F";
+  for (let i = 0; i < n; i++) {
+    let newStruct = "";
+    for (let j = 0; j < struct.length; j++) {
+      switch (struct[j]) {
+        case 'F':
+          newStruct += "F-F+F+FF-F-F+F";
+          break;
+        case '-':
+          newStruct += "-"
+          break;
+        case '+':
+          newStruct += "+"
+          break;
+      }
+    }
+    struct = newStruct;
+  }
+
   const points: Array<Vector3> = initializePoints();
-  up(points, 1)
-  right(points, 1);
-  forward(points, -1);
-  up(points, 1);
-  forward(points, 1);
-  right(points, -1);
-  forward(points, -1);
-  up(points, -1);
+  drawPoints(points, struct)
 
   return (
     <div className={"content"}>
-      <h3>Plant Generator</h3>
+      <div>
+        <h3>Plant Generator</h3>
+        <label>
+          <p>n = </p>
+        </label>
+        <input className="input" type="number" value={n} onChange={handleChange}/>
+      </div>
       <Canvas id="canvas">
         <PivotControls
-          scale={0.75}
+          scale={0.7}
           anchor={[0, -1, 0]}
           activeAxes={[true, false, true]}
         >
@@ -28,7 +53,7 @@ function App() {
             points={points}
             lineWidth={2}
             color={"black"}
-            scale={1}
+            linewidth={0.5}
           />
         </PivotControls>
       </Canvas>
