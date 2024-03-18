@@ -7,19 +7,19 @@ import {up} from "./draw.ts";
 
 function App() {
   const points: Array<Vector2> = [];
-  up(points, 2);
-
+  up(points, 1);
 
   return (
-    <>
+    <div className={"content"}>
       <h1>Plant Generator</h1>
       <Canvas>
         <Line
           points={points}
           lineWidth={2}
+          color={"black"}
         />
       </Canvas>
-    </>
+    </div>
   )
 }
 
