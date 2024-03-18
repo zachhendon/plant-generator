@@ -1,0 +1,9 @@
+.content {
+    height: 100%;
+    display: flex;
+    padding: 3.2rem 6.4rem;
+}
+
+#canvas {
+    border: solid black 2px;
+}
