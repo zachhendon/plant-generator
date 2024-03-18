@@ -2,12 +2,13 @@ import './App.css'
 import {Canvas} from '@react-three/fiber'
 import {Line} from "@react-three/drei"
 import {Vector2} from "three"
+import {up} from "./draw.ts";
+
 
 function App() {
   const points: Array<Vector2> = [];
-  points.push(new Vector2(0, 0))
-  points.push(new Vector2(1, 0))
-  points.push(new Vector2(1, 1))
+  up(points, 2);
+
 
   return (
     <>
